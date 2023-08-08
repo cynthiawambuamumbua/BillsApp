@@ -54,13 +54,13 @@ class login : AppCompatActivity() {
             error=true
         }
         if (!error){
-            val LoginRequest= LoginRequest(
+            val loginRequest= LoginRequest(
                 ConfirmPassword=ConfirmPassword,
                 password=password,
                 userName = userName
             )
             binding.pbprogressBar.visibility= View.VISIBLE
-            loginUserViewModel.loginUser(LoginRequest)
+            loginUserViewModel.loginUser(loginRequest)
         }
     }
     fun clearErrors(){
