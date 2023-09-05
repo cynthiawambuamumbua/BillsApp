@@ -1,5 +1,6 @@
 package com.example.appasessment.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -10,7 +11,9 @@ import androidx.lifecycle.Observer
 import com.example.appasessment.R
 import com.example.appasessment.databinding.ActivityMainBinding
 import com.example.appasessment.models.RegisterRequest
+import com.example.appasessment.utils.Constants
 import com.example.appasessment.viewModel.UserViewModel
+import javax.xml.transform.sax.TemplatesHandler
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding:ActivityMainBinding
@@ -26,14 +29,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.tvLogIn.setOnClickListener {
-            startActivity(Intent(this,login::class.java))
-//            val intent=Intent(this,login::class.java)
+            startActivity(Intent(this,Login::class.java))
         }
 
         binding.btnSignUp.setOnClickListener {
             validateRegistration()
-            startActivity(Intent(this,login::class.java))
+            startActivity(Intent(this,Login::class.java))
             clearErrors()
+            redirectUser()
             binding.pbprogressBar.visibility=View.GONE
             userViewModel.registerLiveData.observe(this, Observer { registerResponse->
                     Toast.makeText(this, registerResponse.message, Toast.LENGTH_LONG).show()
@@ -94,6 +97,14 @@ class MainActivity : AppCompatActivity() {
         binding.tilpassword.error=null
         binding.tilemail.error=null
         binding.tilConfirmPassword.error=null
+    }
+    fun redirectUser(){
+        val preferences=getSharedPreferences(Constants.PREFS,Context.MODE_PRIVATE)
+        val  userId=preferences.getString(Constants.USER_ID,Constants.EMPTY_STRING)!!
+        if (userId.isNotBlank()) {
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
+
     }
 }
 
