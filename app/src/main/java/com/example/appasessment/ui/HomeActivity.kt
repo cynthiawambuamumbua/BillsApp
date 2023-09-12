@@ -2,15 +2,19 @@ package com.example.appasessment.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import com.example.appasessment.R
 import com.example.appasessment.databinding.ActivityHomeBinding
+import com.example.appasessment.viewModel.BillsViewModel
 
 class HomeActivity : AppCompatActivity() {
     lateinit var binding: ActivityHomeBinding
+    val billsViewModel:BillsViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        billsViewModel.createRecurringBills()
     }
 
     override fun onResume() {
